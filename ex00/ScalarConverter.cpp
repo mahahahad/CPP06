@@ -5,9 +5,25 @@ const char *ScalarConverter::ConversionException::what() const throw() {
 }
 
 ScalarConverter::Type  getType(const std::string& ref) {
-    //TODO: Get the type of the reference string
-    (void) ref;
-    return (ScalarConverter::E_CHAR);
+    // Check if the length of the string is 1 
+    // AND it is not a number because all printable chars 
+    // EXCEPT numbers are chars
+    if (ref.length() == 1 && (ref[0] < '0' || ref[0] > '9')) {
+        // Return the char type
+        return (ScalarConverter::E_CHAR);
+    }
+    // Check if the string ends with an 'f'
+    else if (ref[ref.length() - 1] == 'f') {
+        // Return the float type
+        return (ScalarConverter::E_FLOAT);
+    }
+    // Check if the string contains a decimal point
+    else if (ref.find('.') != std::string::npos) {
+        // Return the double type
+        return (ScalarConverter::E_DOUBLE);
+    }
+    // Return the int type by default
+    return (ScalarConverter::E_INT);
 }
 
 void    displayValue(const std::string& val_type, char value) {
@@ -28,11 +44,12 @@ void    displayDecimal(
     const std::string& ref,
     double value
 ) {
-    size_t decimal_index = ref.find_first_of('.') + 1;
-    int precision = ref.length() - decimal_index;
-    std::cout << std::fixed
-        << std::setprecision((decimal_index ? precision : 1));
-
+    int     precision = 1;
+    size_t  decimal_index = ref.find_first_of('.');
+    if (decimal_index != std::string::npos) {
+        precision = ref.length() - (decimal_index + 1);
+    }
+    std::cout << std::fixed << std::setprecision(precision);
     std::cout << val_type << value << std::endl;
 }
 
@@ -41,11 +58,12 @@ void    displayDecimal(
     const std::string& ref,
     float value
 ) {
-    size_t decimal_index = ref.find_first_of('.') + 1;
-    int precision = ref.length() - decimal_index;
-    std::cout << std::fixed
-        << std::setprecision((decimal_index ? precision : 1));
-
+    int     precision = 1;
+    size_t  decimal_index = ref.find_first_of('.');
+    if (decimal_index != std::string::npos) {
+        precision = ref.length() - (decimal_index + 1);
+    }
+    std::cout << std::fixed << std::setprecision(precision);
     std::cout << val_type << value << "f" << std::endl;
 }
 
@@ -66,7 +84,8 @@ void    handleDouble(const std::string& ref) {
 }
 
 void    handleFloat(const std::string& ref) {
-    std::istringstream ss(ref);
+    std::string refDup = ref.substr(0, ref.length() - 1);
+    std::istringstream ss(refDup);
     float   converted;
     char    c;
 
@@ -77,8 +96,8 @@ void    handleFloat(const std::string& ref) {
 
     displayValue("char: ", static_cast<char>(converted));
     displayValue("int: ", static_cast<int>(converted));
-    displayDecimal("float: ", ref, converted);
-    displayDecimal("double: ", ref, static_cast<double>(converted));
+    displayDecimal("float: ", refDup, converted);
+    displayDecimal("double: ", refDup, static_cast<double>(converted));
 }
 
 void    handleInt(const std::string& ref) {
