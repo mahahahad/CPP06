@@ -5,6 +5,26 @@ const char *ScalarConverter::ConversionException::what() const throw() {
 }
 
 ScalarConverter::Type  getType(const std::string& ref) {
+    // Check for pseudo-literals
+    std::string literals[] = {
+            "nan",
+            "nanf",
+            "inf",
+            "inff",
+            "-inf",
+            "-inff",
+            "+inf",
+            "+inff"
+        };
+    for (unsigned int i = 0; i <= sizeof(literals) / sizeof(std::string); i++) {
+        if (ref == literals[i]) {
+            return (
+                i % 2 == 0
+                    ? ScalarConverter::E_DOUBLE
+                    : ScalarConverter::E_FLOAT
+            );
+        }
+    }
     // Check if the length of the string is 1 
     // AND it is not a number because all printable chars 
     // EXCEPT numbers are chars
@@ -36,6 +56,10 @@ void    displayValue(const std::string& val_type, char value) {
 }
 
 void    displayValue(const std::string& val_type, int value) {
+    std::cout << val_type << value << std::endl;
+}
+
+void    displayValue(const std::string& val_type, const std::string& value) {
     std::cout << val_type << value << std::endl;
 }
 
@@ -71,6 +95,18 @@ void    handleDouble(const std::string& ref) {
     std::istringstream ss(ref);
     double  converted;
     char    c;
+    std::string literals[] = {"nan", "inf", "-inf", "+inf"};
+    std::string floatLiterals[] = {"nanf", "inff", "-inff", "+inff"};
+
+    for (unsigned int i = 0; i <= sizeof(literals) / sizeof(std::string); i++) {
+        if (ref == literals[i]) {
+            displayValue("char: ", "Impossible");
+            displayValue("int: ", "Impossible");
+            displayValue("float: ", floatLiterals[i]);
+            displayValue("double: ", literals[i]);
+            return ;
+        }
+    }
 
     ss >> converted;
     if (ss.fail() || ss.get(c)) {
@@ -88,7 +124,18 @@ void    handleFloat(const std::string& ref) {
     std::istringstream ss(refDup);
     float   converted;
     char    c;
+    std::string literals[] = {"nanf", "inff", "-inff", "+inff"};
+    std::string doubleLiterals[] = {"nan", "inf", "-inf", "+inf"};
 
+    for (unsigned int i = 0; i <= sizeof(literals) / sizeof(std::string); i++) {
+        if (ref == literals[i]) {
+            displayValue("char: ", "Impossible");
+            displayValue("int: ", "Impossible");
+            displayValue("float: ", literals[i]);
+            displayValue("double: ", doubleLiterals[i]);
+            return ;
+        }
+    }
     ss >> converted;
     if (ss.fail() || ss.get(c)) {
         throw ScalarConverter::ConversionException();
