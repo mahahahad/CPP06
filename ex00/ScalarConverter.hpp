@@ -9,7 +9,7 @@
 class   ScalarConverter {
     public:
         static int  convert( const std::string& ref );
-        enum    Type { E_INT, E_DOUBLE, E_FLOAT };
+        enum    Type { E_INT, E_DOUBLE, E_FLOAT, E_CHAR };
 
     private:
         ScalarConverter( void );
@@ -17,7 +17,7 @@ class   ScalarConverter {
         ScalarConverter&  operator=( const ScalarConverter& copy );
         ~ScalarConverter( void );
     
-    private:
+    public:
         class   ConversionException: public std::exception {
             public:
                 virtual const char * what() const throw();
