@@ -43,18 +43,18 @@ void    identify(Base* p) {
 // Prints the actual type of the object referenced by p: 'A', 'B', or 'C'
 void    identify(Base& p) {
     try {
-        __attribute_maybe_unused__
         A&   a = dynamic_cast<A&>(p);
+        (void) a;
         std::cout << "A" << std::endl;
     } catch (std::exception &e) { }
     try {
-        __attribute_maybe_unused__
         B&   b = dynamic_cast<B&>(p);
+        (void) b;
         std::cout << "B" << std::endl;
     } catch (std::exception &e) { }
     try {
-        __attribute_maybe_unused__
         C&   c = dynamic_cast<C&>(p);
+        (void) c;
         std::cout << "C" << std::endl;
     } catch (std::exception &e) { }
 };
