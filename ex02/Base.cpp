@@ -2,8 +2,6 @@
 #include "B.hpp"
 #include "Base.hpp"
 #include "C.hpp"
-#include <stdlib.h>
-#include <time.h>
 
 Base::~Base() {};
 
@@ -11,7 +9,6 @@ Base::~Base() {};
 Base*   generate(void) {
     Base*   random;
 
-    srand(time(NULL));
     int randomVal = rand() % 3 + 1;
     if (randomVal == 1)
         random = new A;
@@ -60,18 +57,4 @@ void    identify(Base& p) {
         C&   c = dynamic_cast<C&>(p);
         std::cout << "C" << std::endl;
     } catch (std::exception &e) { }
-    // if (castPtr) {
-    //     std::cout << "A" << std::endl;
-    //     return ;
-    // }
-    // castPtr = dynamic_cast<B*>(p);
-    // if (castPtr) {
-    //     std::cout << "B" << std::endl;
-    //     return ;
-    // }
-    // castPtr = dynamic_cast<C*>(p);
-    // if (castPtr) {
-    //     std::cout << "C" << std::endl;
-    //     return ;
-    // }
 };

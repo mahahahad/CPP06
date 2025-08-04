@@ -1,6 +1,8 @@
 #include "Base.hpp"
 
-int main(void) {
+int main() {
+    // Set the seed once here for randomness
+    srand(time(NULL));
     Base    *test = generate();
     std::cout << "Type of base generated: ";
     identify(test);
