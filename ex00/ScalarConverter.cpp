@@ -179,7 +179,7 @@ void    handleChar(const std::string& ref) {
     displayDecimal("double: ", ref, static_cast<double>(converted));
 }
 
-int ScalarConverter::convert(const std::string& ref) {
+void    ScalarConverter::convert(const std::string& ref) {
     switch(getType(ref)) {
         case (ScalarConverter::E_DOUBLE):
             handleDouble(ref);
@@ -194,5 +194,4 @@ int ScalarConverter::convert(const std::string& ref) {
             handleChar(ref);
             break;
     }
-    return (0);
 }

@@ -8,7 +8,7 @@
 
 class   ScalarConverter {
     public:
-        static int  convert( const std::string& ref );
+        static void  convert( const std::string& ref );
         enum    Type { E_INT, E_DOUBLE, E_FLOAT, E_CHAR };
     
     public:
