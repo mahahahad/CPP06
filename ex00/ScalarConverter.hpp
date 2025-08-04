@@ -18,10 +18,10 @@ class   ScalarConverter {
         };
 
     private:
-        ScalarConverter( void );
+        ScalarConverter();
         ScalarConverter( const ScalarConverter& copy );
         ScalarConverter&  operator=( const ScalarConverter& copy );
-        ~ScalarConverter( void );
+        ~ScalarConverter();
 };
 
 #endif

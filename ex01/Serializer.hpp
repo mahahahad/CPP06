@@ -16,10 +16,10 @@ class   Serializer {
         static Data*       deserialize( uintptr_t raw );
 
     private:
-        Serializer( void );
+        Serializer();
         Serializer( const Serializer& copy );
         Serializer&  operator=( const Serializer& copy );
-        ~Serializer( void );
+        ~Serializer();
 };
 
 #endif
